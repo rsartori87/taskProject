@@ -1,10 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 #include <QSystemTrayIcon>
 
-class MainWindow : public QMainWindow
+class QGroupBox;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+
+class MainWindow : public QDialog
 {
     Q_OBJECT
 
@@ -17,8 +22,18 @@ private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 private:
     void createTrayIcon();
+    void createTextGroup();
+    void createFileGroup();
 private:
-    QSystemTrayIcon *trayIcon;
+    QGroupBox* textGroup;
+    QLabel* textLabel;
+    QLineEdit* textLineEdit;
+
+    QGroupBox* fileGroup;
+    QLabel* fileLabel;
+    QLineEdit* fileLineEdit;
+
     QMenu* trayMenu;
+    QSystemTrayIcon *trayIcon;
 };
 #endif // MAINWINDOW_H

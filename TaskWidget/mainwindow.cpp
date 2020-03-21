@@ -3,11 +3,25 @@
 #include <QStyle>
 #include <QApplication>
 #include <QCloseEvent>
+#include <QGroupBox>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QDialog(parent)
 {
+    createTextGroup();
+    createFileGroup();
     createTrayIcon();
+
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(textGroup);
+    mainLayout->addWidget(fileGroup);
+    setLayout(mainLayout);
+
+    resize(400, 300);
 }
 
 MainWindow::~MainWindow()
@@ -61,5 +75,27 @@ void MainWindow::createTrayIcon()
     trayIcon->show();
 
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+}
+
+void MainWindow::createTextGroup()
+{
+    textGroup = new QGroupBox("Impostazioni testo");
+    textLabel = new QLabel("Testo");
+    textLineEdit = new QLineEdit;
+    QHBoxLayout* textLayout = new QHBoxLayout;
+    textLayout->addWidget(textLabel);
+    textLayout->addWidget(textLineEdit);
+    textGroup->setLayout(textLayout);
+}
+
+void MainWindow::createFileGroup()
+{
+    fileGroup = new QGroupBox("Impostazioni file");
+    fileLabel = new QLabel("File");
+    fileLineEdit = new QLineEdit;
+    QHBoxLayout* fileLayout = new QHBoxLayout;
+    fileLayout->addWidget(fileLabel);
+    fileLayout->addWidget(fileLineEdit);
+    fileGroup->setLayout(fileLayout);
 }
 
