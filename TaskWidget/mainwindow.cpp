@@ -5,9 +5,12 @@
 #include <QCloseEvent>
 #include <QGroupBox>
 #include <QLabel>
-#include <QHBoxLayout>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
@@ -81,10 +84,13 @@ void MainWindow::createTextGroup()
 {
     textGroup = new QGroupBox("Impostazioni testo");
     textLabel = new QLabel("Testo");
+    confirmTextButton = new QPushButton("Conferma");
+
     textLineEdit = new QLineEdit;
-    QHBoxLayout* textLayout = new QHBoxLayout;
-    textLayout->addWidget(textLabel);
-    textLayout->addWidget(textLineEdit);
+    QGridLayout* textLayout = new QGridLayout;
+    textLayout->addWidget(textLabel, 0, 0);
+    textLayout->addWidget(textLineEdit, 0, 1);
+    textLayout->addWidget(confirmTextButton, 1, 0);
     textGroup->setLayout(textLayout);
 }
 
@@ -93,9 +99,25 @@ void MainWindow::createFileGroup()
     fileGroup = new QGroupBox("Impostazioni file");
     fileLabel = new QLabel("File");
     fileLineEdit = new QLineEdit;
-    QHBoxLayout* fileLayout = new QHBoxLayout;
-    fileLayout->addWidget(fileLabel);
-    fileLayout->addWidget(fileLineEdit);
+    fileButton = new QPushButton("Sfoglia");
+    confirmFileButton = new QPushButton("Conferma");
+
+    connect(fileButton, &QPushButton::clicked, [=]() {
+        chooseFile();
+    });
+
+    QGridLayout* fileLayout = new QGridLayout;
+    fileLayout->addWidget(fileLabel, 0, 0);
+    fileLayout->addWidget(fileLineEdit, 0, 1);
+    fileLayout->addWidget(fileButton, 0, 2);
+    fileLayout->addWidget(confirmFileButton, 1, 0);
     fileGroup->setLayout(fileLayout);
+}
+
+void MainWindow::chooseFile()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Scegli file",
+                                                    QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first());
+    fileLineEdit->setText(filename);
 }
 

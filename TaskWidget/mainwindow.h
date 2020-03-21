@@ -24,14 +24,19 @@ private:
     void createTrayIcon();
     void createTextGroup();
     void createFileGroup();
+
+    void chooseFile();
 private:
     QGroupBox* textGroup;
     QLabel* textLabel;
     QLineEdit* textLineEdit;
+    QPushButton* confirmTextButton;
 
     QGroupBox* fileGroup;
     QLabel* fileLabel;
     QLineEdit* fileLineEdit;
+    QPushButton* fileButton;
+    QPushButton* confirmFileButton;
 
     QMenu* trayMenu;
     QSystemTrayIcon *trayIcon;
