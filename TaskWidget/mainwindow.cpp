@@ -13,6 +13,12 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 
+#include "period.h"
+#include "periodon.h"
+#include "periodfield.h"
+#include "filetask.h"
+#include <vector>
+
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
 {
@@ -24,6 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(textGroup);
     mainLayout->addWidget(fileGroup);
     setLayout(mainLayout);
+
+    filePeriod = new Period(this);
+    std::vector<int> seconds{ 0, 10, 20, 30, 40, 50 };
+    PeriodOn on(PeriodField::SECOND, seconds);
+    filePeriod->addTrigger(on);
 
     resize(400, 300);
 }
@@ -108,6 +119,7 @@ void MainWindow::createFileGroup()
     });
 
     connect(confirmFileButton, &QPushButton::clicked, [=]() {
+        fileTask = new FileTask(fileLineEdit->text(), filePeriod, this);
         QMessageBox::information(this,
                                  "Task Application",
                                  "Modifiche applicate con successo",

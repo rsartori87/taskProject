@@ -1,7 +1,16 @@
 #include "period.h"
+#include <QTimer>
 
-Period::Period()
-{}
+Period::Period(QObject* parent) : QObject(parent)
+{
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]() {
+        if (match(QDateTime::currentDateTime())) {
+            emit triggered();
+        }
+    });
+    timer->start(1000);
+}
 
 bool Period::match(const QDateTime &dateTime)
 {

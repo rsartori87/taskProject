@@ -8,6 +8,8 @@ class QGroupBox;
 class QLabel;
 class QLineEdit;
 class QPushButton;
+class Period;
+class FileTask;
 
 class MainWindow : public QDialog
 {
@@ -37,6 +39,8 @@ private:
     QLineEdit* fileLineEdit;
     QPushButton* fileButton;
     QPushButton* confirmFileButton;
+    Period* filePeriod;
+    FileTask* fileTask;
 
     QMenu* trayMenu;
     QSystemTrayIcon *trayIcon;
