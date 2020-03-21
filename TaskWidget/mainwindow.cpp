@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
@@ -104,6 +105,13 @@ void MainWindow::createFileGroup()
 
     connect(fileButton, &QPushButton::clicked, [=]() {
         chooseFile();
+    });
+
+    connect(confirmFileButton, &QPushButton::clicked, [=]() {
+        QMessageBox::information(this,
+                                 "Task Application",
+                                 "Modifiche applicate con successo",
+                                 QMessageBox::Ok);
     });
 
     QGridLayout* fileLayout = new QGridLayout;
