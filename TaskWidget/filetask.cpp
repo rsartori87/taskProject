@@ -1,10 +1,12 @@
 #include "filetask.h"
 #include <QDebug>
 #include <QDateTime>
+#include <QFile>
 
 FileTask::FileTask(QString filename, Period *period, QObject *parent) : Task(period, parent), filename(filename)
 {}
 
 void FileTask::executeTask() {
-    qDebug() << QDateTime::currentDateTime() << " executing on " << filename;
+    if (!QFile::exists(filename))
+        qDebug() << QDateTime::currentDateTime() << " file don't exists " << filename;
 }

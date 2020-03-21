@@ -119,6 +119,9 @@ void MainWindow::createFileGroup()
     });
 
     connect(confirmFileButton, &QPushButton::clicked, [=]() {
+        if (fileTask != nullptr) {
+            delete fileTask;
+        }
         fileTask = new FileTask(fileLineEdit->text(), filePeriod, this);
         QMessageBox::information(this,
                                  "Task Application",

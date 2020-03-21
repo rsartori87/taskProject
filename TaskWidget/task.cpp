@@ -2,7 +2,12 @@
 
 Task::Task(Period* period, QObject *parent) : QObject(parent), period(period)
 {
-    connect(period, &Period::triggered, [=]() {
+    connection = connect(period, &Period::triggered, [=]() {
         executeTask();
     });
+}
+
+Task::~Task()
+{
+    disconnect(connection);
 }
