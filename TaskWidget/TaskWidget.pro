@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++11 console
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -19,11 +19,13 @@ SOURCES += \
     filetask.cpp \
     main.cpp \
     mainwindow.cpp \
+    stringtask.cpp \
     task.cpp
 
 HEADERS += \
     filetask.h \
     mainwindow.h \
+    stringtask.h \
     task.h
 
 # Default rules for deployment.

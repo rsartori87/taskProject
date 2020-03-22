@@ -17,6 +17,7 @@
 #include "periodon.h"
 #include "periodfield.h"
 #include "filetask.h"
+#include "stringtask.h"
 #include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -31,10 +32,15 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(fileGroup);
     setLayout(mainLayout);
 
+    textPeriod = new Period(this);
+    std::vector<int> textSeconds{0, 10, 20, 30, 40, 50 };
+    PeriodOn textTrigger(PeriodField::SECOND, textSeconds);
+    textPeriod->addTrigger(textTrigger);
+
     filePeriod = new Period(this);
-    std::vector<int> seconds{ 0, 10, 20, 30, 40, 50 };
-    PeriodOn on(PeriodField::SECOND, seconds);
-    filePeriod->addTrigger(on);
+    std::vector<int> fileSeconds{ 0, 30 };
+    PeriodOn fileTrigger(PeriodField::SECOND, fileSeconds);
+    filePeriod->addTrigger(fileTrigger);
 
     resize(400, 300);
 }
@@ -104,6 +110,17 @@ void MainWindow::createTextGroup()
     textLayout->addWidget(textLineEdit, 0, 1);
     textLayout->addWidget(confirmTextButton, 1, 0);
     textGroup->setLayout(textLayout);
+
+    connect(confirmTextButton, &QPushButton::clicked, [=]() {
+        if (textTask != nullptr) {
+            delete textTask;
+        }
+        textTask = new StringTask(textLineEdit->text(), textPeriod, this);
+        QMessageBox::information(this,
+                                 "Task Application",
+                                 "Modifiche applicate con successo",
+                                 QMessageBox::Ok);
+    });
 }
 
 void MainWindow::createFileGroup()

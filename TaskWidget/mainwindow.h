@@ -10,6 +10,7 @@ class QLineEdit;
 class QPushButton;
 class Period;
 class FileTask;
+class StringTask;
 
 class MainWindow : public QDialog
 {
@@ -33,6 +34,8 @@ private:
     QLabel* textLabel;
     QLineEdit* textLineEdit;
     QPushButton* confirmTextButton;
+    Period* textPeriod;
+    StringTask* textTask;
 
     QGroupBox* fileGroup;
     QLabel* fileLabel;
