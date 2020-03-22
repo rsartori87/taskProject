@@ -35,7 +35,7 @@ private:
     QLineEdit* textLineEdit;
     QPushButton* confirmTextButton;
     Period* textPeriod;
-    StringTask* textTask;
+    StringTask* textTask = nullptr;
 
     QGroupBox* fileGroup;
     QLabel* fileLabel;
@@ -43,7 +43,7 @@ private:
     QPushButton* fileButton;
     QPushButton* confirmFileButton;
     Period* filePeriod;
-    FileTask* fileTask;
+    FileTask* fileTask = nullptr;
 
     QMenu* trayMenu;
     QSystemTrayIcon *trayIcon;
