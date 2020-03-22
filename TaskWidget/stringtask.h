@@ -8,10 +8,11 @@ class StringTask : public Task
 {
     Q_OBJECT
 public:
-    StringTask(QString&& message, Period* period, QObject* parent = nullptr);
-private:
+    StringTask(const QString& message, Period const * period, QObject* parent = nullptr);
+protected:
     void executeTask() override;
-    QString message;
+private:
+    const QString message;
 };
 
 #endif // STRINGTASK_H

@@ -8,10 +8,11 @@ class FileTask : public Task
 {
     Q_OBJECT
 public:
-    FileTask(QString&& filename, Period* period, QObject* parent = nullptr);
-private:
+    FileTask(const QString& filename, Period const * period, QObject* parent = nullptr);
+protected:
     void executeTask() override;
-    QString filename;
+private:
+    const QString filename;
 };
 
 #endif // FILETASK_H

@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QDateTime>
 
-StringTask::StringTask(QString&& message, Period *period, QObject *parent) : Task(period, parent), message(message)
+StringTask::StringTask(const QString& message, Period const *period, QObject *parent) : Task(period, parent), message(message)
 {}
 
 void StringTask::executeTask()

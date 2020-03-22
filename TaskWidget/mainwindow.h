@@ -29,6 +29,7 @@ private:
     void createFileGroup();
 
     void chooseFile();
+    void showSuccess();
 private:
     QGroupBox* textGroup;
     QLabel* textLabel;

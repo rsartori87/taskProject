@@ -3,7 +3,7 @@
 #include <QDateTime>
 #include <QFile>
 
-FileTask::FileTask(QString&& filename, Period *period, QObject *parent) : Task(period, parent), filename(filename)
+FileTask::FileTask(const QString& filename, Period const *period, QObject *parent) : Task(period, parent), filename(filename)
 {}
 
 void FileTask::executeTask() {

@@ -8,15 +8,12 @@ class Task : public QObject
 {
     Q_OBJECT
 public:
-    explicit Task(Period* period, QObject *parent = nullptr);
+    explicit Task(Period const * period, QObject *parent = nullptr);
     ~Task();
-private:
+protected:
     virtual void executeTask() = 0;
-
-signals:
-
 private:
-    Period* period;
+    const Period* period;
     QMetaObject::Connection connection;
 };
 

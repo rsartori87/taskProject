@@ -115,11 +115,10 @@ void MainWindow::createTextGroup()
 
     connect(confirmTextButton, &QPushButton::clicked, [=]() {
         delete textTask;
-        textTask = new StringTask(textLineEdit->text(), textPeriod, this);
-        QMessageBox::information(this,
-                                 "Task Application",
-                                 "Modifiche applicate con successo",
-                                 QMessageBox::Ok);
+        textTask = nullptr;
+        if (!textLineEdit->text().isEmpty())
+            textTask = new StringTask(textLineEdit->text(), textPeriod, this);
+        showSuccess();
     });
 }
 
@@ -137,11 +136,10 @@ void MainWindow::createFileGroup()
 
     connect(confirmFileButton, &QPushButton::clicked, [=]() {
         delete fileTask;
-        fileTask = new FileTask(fileLineEdit->text(), filePeriod, this);
-        QMessageBox::information(this,
-                                 "Task Application",
-                                 "Modifiche applicate con successo",
-                                 QMessageBox::Ok);
+        fileTask = nullptr;
+        if (!fileLineEdit->text().isEmpty())
+            fileTask = new FileTask(fileLineEdit->text(), filePeriod, this);
+        showSuccess();
     });
 
     QGridLayout* fileLayout = new QGridLayout;
@@ -157,5 +155,13 @@ void MainWindow::chooseFile()
     QString filename = QFileDialog::getOpenFileName(this, "Scegli file",
                                                     QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first());
     fileLineEdit->setText(filename);
+}
+
+void MainWindow::showSuccess()
+{
+    QMessageBox::information(this,
+                             "Task Application",
+                             "Modifiche applicate con successo",
+                             QMessageBox::Ok);
 }
 
