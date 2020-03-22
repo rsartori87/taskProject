@@ -1,8 +1,8 @@
 #include <QTest>
 #include "period.h"
-#include "periodon.h"
-#include "periodfield.h"
+#include "trigger.h"
 #include <vector>
+#include <utility>
 
 class TaskLibTest : public QObject {
     Q_OBJECT
@@ -17,7 +17,7 @@ private slots:
         Period period;
         QDate baseDate(2019, 1, 1);
         QDateTime dt(baseDate);
-        PeriodOn on(PeriodField::YEAR, 2020);
+        Trigger on(Trigger::YEAR, 2020);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -26,7 +26,7 @@ private slots:
         Period period;
         QDate baseDate(2020, 1, 1);
         QDateTime dt(baseDate);
-        PeriodOn on(PeriodField::MONTH, 2);
+        Trigger on(Trigger::MONTH, 2);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -35,7 +35,7 @@ private slots:
         Period period;
         QDate baseDate(2020, 1, 1);
         QDateTime dt(baseDate);
-        PeriodOn on(PeriodField::DAY_OF_MONTH, 12);
+        Trigger on(Trigger::DAY_OF_MONTH, 12);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -44,7 +44,7 @@ private slots:
         Period period;
         QDate baseDate(2020, 3, 17); // Tuesday
         QDateTime dt(baseDate);
-        PeriodOn on(PeriodField::DAY_OF_WEEK, 1); // Monday
+        Trigger on(Trigger::DAY_OF_WEEK, 1); // Monday
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -54,7 +54,7 @@ private slots:
         QDate baseDate(2020, 3, 17);
         QTime time(13, 0);
         QDateTime dt(baseDate, time);
-        PeriodOn on(PeriodField::HOUR, 15);
+        Trigger on(Trigger::HOUR, 15);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -64,7 +64,7 @@ private slots:
         QDate baseDate(2020, 3, 17);
         QTime time(13, 35);
         QDateTime dt(baseDate, time);
-        PeriodOn on(PeriodField::MINUTE, 30);
+        Trigger on(Trigger::MINUTE, 30);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -74,7 +74,7 @@ private slots:
         QDate baseDate(2020, 3, 17);
         QTime time(13, 35, 15);
         QDateTime dt(baseDate, time);
-        PeriodOn on(PeriodField::SECOND, 10);
+        Trigger on(Trigger::SECOND, 10);
         period.addTrigger(on);
         QVERIFY(!period.match(dt));
     }
@@ -88,17 +88,17 @@ private slots:
         QTime time1(14, 36, 16);
         QDateTime invalidDateTime(baseDate1, time1);
 
-        PeriodOn onYear(PeriodField::YEAR, 2020);
+        Trigger onYear(Trigger::YEAR, 2020);
         period.addTrigger(onYear);
-        PeriodOn onMonth(PeriodField::MONTH, 3);
+        Trigger onMonth(Trigger::MONTH, 3);
         period.addTrigger(onMonth);
-        PeriodOn onDOM(PeriodField::DAY_OF_MONTH, 17);
+        Trigger onDOM(Trigger::DAY_OF_MONTH, 17);
         period.addTrigger(onDOM);
-        PeriodOn onHour(PeriodField::HOUR, 13);
+        Trigger onHour(Trigger::HOUR, 13);
         period.addTrigger(onHour);
-        PeriodOn onMinute(PeriodField::MINUTE, 35);
+        Trigger onMinute(Trigger::MINUTE, 35);
         period.addTrigger(onMinute);
-        PeriodOn onSecond(PeriodField::SECOND, 15);
+        Trigger onSecond(Trigger::SECOND, 15);
         period.addTrigger(onSecond);
 
         QVERIFY(period.match(validDateTime));
@@ -114,22 +114,22 @@ private slots:
         QTime time1(14, 36, 16);
         QDateTime invalidDateTime(baseDate1, time1);
 
-        PeriodOn onYear(PeriodField::YEAR, 2020);
+        Trigger onYear(Trigger::YEAR, 2020);
         period.addTrigger(onYear);
         std::vector<int> months{ 3, 4 };
-        PeriodOn onMonth(PeriodField::MONTH, months);
+        Trigger onMonth(Trigger::MONTH, std::move(months));
         period.addTrigger(onMonth);
         std::vector<int> days{ 17, 18 };
-        PeriodOn onDOM(PeriodField::DAY_OF_MONTH, days);
+        Trigger onDOM(Trigger::DAY_OF_MONTH, std::move(days));
         period.addTrigger(onDOM);
         std::vector<int> hours{13, 14 };
-        PeriodOn onHour(PeriodField::HOUR, hours);
+        Trigger onHour(Trigger::HOUR, std::move(hours));
         period.addTrigger(onHour);
         std::vector<int> minutes{ 35, 36 };
-        PeriodOn onMinute(PeriodField::MINUTE, minutes);
+        Trigger onMinute(Trigger::MINUTE, std::move(minutes));
         period.addTrigger(onMinute);
         std::vector<int> seconds{ 15, 16 };
-        PeriodOn onSecond(PeriodField::SECOND, seconds);
+        Trigger onSecond(Trigger::SECOND, std::move(seconds));
         period.addTrigger(onSecond);
 
         QVERIFY(period.match(validDateTime));

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDateTime>
-#include "periodon.h"
+#include "trigger.h"
 #include <vector>
 
 #include "TaskLib_global.h"
@@ -16,11 +16,11 @@ class TASKLIB_EXPORT Period : public QObject
 public:
     Period(QObject* parent = nullptr);
     bool match(const QDateTime& dateTime);
-    void addTrigger(PeriodOn addTrigger);
+    void addTrigger(Trigger on);
 signals:
     void triggered();
 private:
-    std::vector<PeriodOn> _conditions;
+    std::vector<Trigger> _conditions;
     QTimer* timer;
 };
 

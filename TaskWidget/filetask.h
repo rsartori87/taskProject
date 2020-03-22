@@ -8,7 +8,7 @@ class FileTask : public Task
 {
     Q_OBJECT
 public:
-    FileTask(QString filename, Period* period, QObject* parent = nullptr);
+    FileTask(QString&& filename, Period* period, QObject* parent = nullptr);
 private:
     void executeTask() override;
     QString filename;

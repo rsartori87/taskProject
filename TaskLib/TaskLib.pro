@@ -18,13 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     period.cpp \
-    periodon.cpp
+    trigger.cpp
 
 HEADERS += \
     TaskLib_global.h \
     period.h \
-    periodon.h \
-    periodfield.h
+    trigger.h
 
 # Default rules for deployment.
 unix {

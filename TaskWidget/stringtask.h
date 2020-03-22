@@ -8,7 +8,7 @@ class StringTask : public Task
 {
     Q_OBJECT
 public:
-    StringTask(QString message, Period* period, QObject* parent = nullptr);
+    StringTask(QString&& message, Period* period, QObject* parent = nullptr);
 private:
     void executeTask() override;
     QString message;

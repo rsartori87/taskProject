@@ -1,37 +1,37 @@
-#include "periodon.h"
+#include "trigger.h"
 
-PeriodOn::PeriodOn(PeriodField field, int when) : _field(field)
+Trigger::Trigger(TriggerField field, int when) : _field(field)
 {
     _whens.push_back(when);
 }
 
-PeriodOn::PeriodOn(PeriodField field, std::vector<int> whens) : _field(field), _whens(whens)
+Trigger::Trigger(TriggerField field, std::vector<int>&& whens) : _field(field), _whens(whens)
 {}
 
-bool PeriodOn::match(const QDateTime &dateTime) const
+bool Trigger::match(const QDateTime &dateTime) const
 {
     bool result = false;
     int value;
     switch (_field) {
-    case PeriodField::YEAR:
+    case TriggerField::YEAR:
         value = dateTime.date().year();
         break;
-    case PeriodField::MONTH:
+    case TriggerField::MONTH:
         value = dateTime.date().month();
         break;
-    case PeriodField::DAY_OF_MONTH:
+    case TriggerField::DAY_OF_MONTH:
         value = dateTime.date().day();
         break;
-    case PeriodField::DAY_OF_WEEK:
+    case TriggerField::DAY_OF_WEEK:
         value = dateTime.date().dayOfWeek();
         break;
-    case PeriodField::HOUR:
+    case TriggerField::HOUR:
         value = dateTime.time().hour();
         break;
-    case PeriodField::MINUTE:
+    case TriggerField::MINUTE:
         value = dateTime.time().minute();
         break;
-    case PeriodField::SECOND:
+    case TriggerField::SECOND:
         value = dateTime.time().second();
         break;
     default:

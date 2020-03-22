@@ -14,11 +14,13 @@
 #include <QMessageBox>
 
 #include "period.h"
-#include "periodon.h"
-#include "periodfield.h"
+#include "trigger.h"
 #include "filetask.h"
 #include "stringtask.h"
 #include <vector>
+#include <utility>
+
+constexpr int MESSAGE_DURATION = 2000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
@@ -34,12 +36,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     textPeriod = new Period(this);
     std::vector<int> textSeconds{0, 10, 20, 30, 40, 50 };
-    PeriodOn textTrigger(PeriodField::SECOND, textSeconds);
+    Trigger textTrigger(Trigger::SECOND, std::move(textSeconds));
     textPeriod->addTrigger(textTrigger);
 
     filePeriod = new Period(this);
     std::vector<int> fileSeconds{ 0, 30 };
-    PeriodOn fileTrigger(PeriodField::SECOND, fileSeconds);
+    Trigger fileTrigger(Trigger::SECOND, std::move(fileSeconds));
     filePeriod->addTrigger(fileTrigger);
 
     resize(400, 300);
@@ -58,7 +60,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         trayIcon->showMessage("Task Program",
                               "Il programma rimmarrà in esecuzione in background, per chiudere il programma fare click su esci, nel menu.",
                               icon,
-                              2000);
+                              MESSAGE_DURATION);
     }
 }
 
@@ -112,9 +114,7 @@ void MainWindow::createTextGroup()
     textGroup->setLayout(textLayout);
 
     connect(confirmTextButton, &QPushButton::clicked, [=]() {
-        if (textTask != nullptr) {
-            delete textTask;
-        }
+        delete textTask;
         textTask = new StringTask(textLineEdit->text(), textPeriod, this);
         QMessageBox::information(this,
                                  "Task Application",
@@ -136,9 +136,7 @@ void MainWindow::createFileGroup()
     });
 
     connect(confirmFileButton, &QPushButton::clicked, [=]() {
-        if (fileTask != nullptr) {
-            delete fileTask;
-        }
+        delete fileTask;
         fileTask = new FileTask(fileLineEdit->text(), filePeriod, this);
         QMessageBox::information(this,
                                  "Task Application",

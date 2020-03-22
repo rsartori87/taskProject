@@ -1,6 +1,8 @@
 #include "period.h"
 #include <QTimer>
 
+constexpr int SECOND_DURATION = 1000;
+
 Period::Period(QObject* parent) : QObject(parent)
 {
     timer = new QTimer(this);
@@ -9,7 +11,7 @@ Period::Period(QObject* parent) : QObject(parent)
             emit triggered();
         }
     });
-    timer->start(1000);
+    timer->start(SECOND_DURATION);
 }
 
 bool Period::match(const QDateTime &dateTime)
@@ -21,7 +23,7 @@ bool Period::match(const QDateTime &dateTime)
     return result;
 }
 
-void Period::addTrigger(PeriodOn on)
+void Period::addTrigger(Trigger on)
 {
     _conditions.push_back(on);
 }
